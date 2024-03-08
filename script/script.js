@@ -57,10 +57,9 @@ function update(weather) {
   updateHtmlElement(".weather-condition", weather.condition);
   updateHtmlElement(".current-humidity", weather.humidity);
   updateHtmlElement(".current-wind-speed", weather.windSpeed);
+  updateHtmlElement(".emoji", weather.emoji);
 
   updateHtmlElement("span.date", getDate());
-
-  updateHtmlElement(".emoji", weather.emoji);
 }
 
 function updateHtmlElement(className, value) {
@@ -68,6 +67,29 @@ function updateHtmlElement(className, value) {
   element.innerHTML = value;
 }
 
+function displayForecast() {
+  let forecast = document.querySelector("#forecast");
+
+  let forecastHTML = "";
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<ul class="daily-weather">
+          <li>
+            <div class="weather-forecast-week-day">${day}</div>
+            <div class="weather-forecast-emoji">🌦</div>
+            <span class="weather-forecast-min">10˚</span><span class="weather-forecast-max">12˚</span> 
+          </li>
+       
+        </ul>`;
+  });
+
+  forecast.innerHTML = forecastHTML;
+}
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", search);
 requestApi("London");
+
+displayForecast();
