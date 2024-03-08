@@ -1,0 +1,112 @@
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: rgba(231, 251, 199, 0.345);
+}
+
+#weather-app {
+  background-color: white;
+  display: block;
+  margin: 60px auto;
+  width: 590px;
+  border-radius: 5px;
+  box-shadow: 2px 3px 2px rgba(173, 174, 175, 0.4);
+  /* -2px -3px 3px rgba(173, 174, 175, 0.31); */
+  padding: 35px;
+}
+
+h1 {
+  margin-left: 5px;
+  font-size: 35px;
+}
+
+p {
+  color: slategray;
+  margin-left: 5px;
+}
+
+p .current-humidity .current-wind {
+  color: rgb(81, 115, 29);
+}
+
+div .emoji {
+  position: relative;
+  font-size: 30px;
+  bottom: 10px;
+  padding-right: 2px;
+}
+
+div .current-weather {
+  display: inline;
+  font-size: 65px;
+  margin-top: 20px;
+}
+
+div .degrees {
+  position: relative;
+  bottom: 30px;
+  font-size: 25px;
+}
+
+footer {
+  padding-top: 27px;
+  border-top: 1px solid rgba(173, 174, 175, 0.24);
+  font-size: 13px;
+  color: slategrey;
+  text-align: center;
+}
+
+footer a {
+  color: rgb(73, 103, 29);
+  text-decoration: none;
+}
+
+#city {
+  width: 75%;
+  padding: 9px;
+  border: 1px solid rgb(73, 103, 29);
+  border-radius: 4px;
+  color: slategray;
+}
+
+#search-button {
+  padding: 10px;
+  width: 20%;
+  background-color: rgb(81, 115, 29);
+  color: white;
+  border-radius: 4px;
+  border: none;
+}
+
+#search-form {
+  padding-bottom: 27px;
+  border-bottom: 1px solid rgba(173, 174, 175, 0.24);
+}
+
+#weather {
+  margin-top: 30px;
+  margin-right: 9px;
+}
+
+div .today-weather {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 30px 0;
+}
+
+.daily-weather {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.daily-weather li {
+  width: 80px;
+  height: 100px;
+  background-color: rgba(224, 246, 190, 0.395);
+  box-shadow: 1px 1px 1px rgba(155, 155, 156, 0.435);
+  border-radius: 4px;
+  list-style: none;
+  text-align: center;
+  font-size: 20px;
+}
