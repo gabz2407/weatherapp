@@ -27,6 +27,10 @@ function search(event) {
   let input = document.querySelector("#city-input");
   let city = input.value;
 
+  requestAPI(city);
+}
+
+function requestAPI(city) {
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(apiTemperature);
 }
@@ -35,23 +39,40 @@ let form = document.querySelector("#search-form");
 form.addEventListener("submit", search);
 
 function apiTemperature(response) {
-  let currentWeather = Math.round(response.data.temperature.current);
-  let degrees = document.querySelector(".current-weather");
-  degrees.innerHTML = currentWeather;
-
-  let currentHumidity = response.data.temperature.humidity;
-  let humidity = document.querySelector(".current-humidity");
-  humidity.innerHTML = currentHumidity;
-
+  let weatherCondition = response.data.condition.description;
   let currentWindSpeed = response.data.wind.speed;
-  let speed = document.querySelector(".current-wind-speed");
-  speed.innerHTML = currentWindSpeed;
-
+  let currentHumidity = response.data.temperature.humidity;
+  let currentWeather = Math.round(response.data.temperature.current);
   let city = response.data.city;
-  changeCity(city);
+
+  updateWeatherCondition(weatherCondition);
+  updateWindSpeed(currentWindSpeed);
+  updateHumidity(currentHumidity);
+  updateDegrees(currentWeather);
+  updateCity(city);
 }
 
-function changeCity(city) {
+function updateWeatherCondition(weatherCondition) {
+  let condition = document.querySelector(".weather-condition");
+  condition.innerHTML = weatherCondition;
+}
+
+function updateWindSpeed(currentWindSpeed) {
+  let speed = document.querySelector(".current-wind-speed");
+  speed.innerHTML = currentWindSpeed;
+}
+
+function updateHumidity(currentHumidity) {
+  let humidity = document.querySelector(".current-humidity");
+  humidity.innerHTML = currentHumidity;
+}
+
+function updateDegrees(currentWeather) {
+  let degrees = document.querySelector(".current-weather");
+  degrees.innerHTML = currentWeather;
+}
+
+function updateCity(city) {
   let cityElement = document.querySelector("h1.city-result");
   cityElement.innerHTML = city;
 }
