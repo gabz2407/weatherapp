@@ -76,3 +76,5 @@ function updateCity(city) {
   let cityElement = document.querySelector("h1.city-result");
   cityElement.innerHTML = city;
 }
+
+requestAPI("London");
