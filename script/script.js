@@ -19,10 +19,11 @@ function apiTemperature(response) {
     city: response.data.city,
     temperature: Math.round(response.data.temperature.current),
     condition: response.data.condition.description,
-    humidity: response.data.temperature.humidity,
-    windSpeed: response.data.wind.speed,
+    humidity: `${response.data.temperature.humidity}%`,
+    windSpeed: `${response.data.wind.speed}km/h`,
+    emoji: `<img src="${response.data.condition.icon_url}" class="emoji">`,
   };
-
+  console.log(response);
   update(weather);
 }
 
@@ -51,16 +52,18 @@ function getDate() {
 }
 
 function update(weather) {
-  updateHTMLElement("h1.city-result", weather.city);
-  updateHTMLElement(".current-temperature", weather.temperature);
-  updateHTMLElement(".weather-condition", weather.condition);
-  updateHTMLElement(".current-humidity", weather.humidity);
-  updateHTMLElement(".current-wind-speed", weather.windSpeed);
+  updateHtmlElement("h1.city-result", weather.city);
+  updateHtmlElement(".current-temperature", weather.temperature);
+  updateHtmlElement(".weather-condition", weather.condition);
+  updateHtmlElement(".current-humidity", weather.humidity);
+  updateHtmlElement(".current-wind-speed", weather.windSpeed);
 
-  updateHTMLElement("span.date", getDate());
+  updateHtmlElement("span.date", getDate());
+
+  updateHtmlElement(".emoji", weather.emoji);
 }
 
-function updateHTMLElement(className, value) {
+function updateHtmlElement(className, value) {
   let element = document.querySelector(className);
   element.innerHTML = value;
 }

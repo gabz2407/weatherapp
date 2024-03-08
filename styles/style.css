@@ -52,24 +52,24 @@ p .current-humidity .current-wind {
 
 div .emoji {
   position: relative;
-  font-size: 30px;
-  bottom: 10px;
-  padding-right: 2px;
+  bottom: 3.5px;
+  width: 90px;
+  right: 2px;
 }
 
 div .current-temperature {
-  display: inline;
   font-size: 65px;
-  margin-top: 20px;
 }
 
 div .degrees {
-  position: relative;
-  bottom: 30px;
   font-size: 25px;
+  padding-top: 10px;
+  padding-left: 3px;
 }
 
 #weather {
+  display: flex;
+  justify-content: space-evenly;
   margin-top: 30px;
   margin-right: 9px;
 }
