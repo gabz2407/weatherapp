@@ -1,26 +1,5 @@
 let apiKey = "8bc029ce07bb99a925obf42d966t543f";
 
-let now = new Date();
-
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-let weekDay = days[now.getDay()];
-let hours = now.getHours();
-let minutes = now.getMinutes();
-
-let date = document.querySelector("span.date");
-date.innerHTML = `${weekDay} ${hours}:${minutes}`;
-
-//
-
 function search(event) {
   event.preventDefault();
 
@@ -35,41 +14,50 @@ function requestApi(city) {
   axios.get(apiUrl).then(apiTemperature);
 }
 
-let form = document.querySelector("#search-form");
-form.addEventListener("submit", search);
-
 function apiTemperature(response) {
-  let weatherCondition = response.data.condition.description;
-  let currentWindSpeed = response.data.wind.speed;
-  let currentHumidity = response.data.temperature.humidity;
-  let currentTemp = Math.round(response.data.temperature.current);
-  let city = response.data.city;
+  let weather = {
+    city: response.data.city,
+    temperature: Math.round(response.data.temperature.current),
+    condition: response.data.condition.description,
+    humidity: response.data.temperature.humidity,
+    windSpeed: response.data.wind.speed,
+  };
 
-  updateWeatherCondition(weatherCondition);
-  updateWindSpeed(currentWindSpeed);
-  updateHumidity(currentHumidity);
-  updateDegrees(currentTemp);
-  updateCity(city);
+  update(weather);
 }
 
-function updateWeatherCondition(weatherCondition) {
-  updateHTMLElement(".weather-condition", weatherCondition);
+function getDate() {
+  let now = new Date();
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  let weekDay = days[now.getDay()];
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+
+  if (minutes < 10) {
+    return `${weekDay} ${hours}:0${minutes}`;
+  } else {
+    return `${weekDay} ${hours}:${minutes}`;
+  }
 }
 
-function updateWindSpeed(currentWindSpeed) {
-  updateHTMLElement(".current-wind-speed", currentWindSpeed);
-}
+function update(weather) {
+  updateHTMLElement("h1.city-result", weather.city);
+  updateHTMLElement(".current-temperature", weather.temperature);
+  updateHTMLElement(".weather-condition", weather.condition);
+  updateHTMLElement(".current-humidity", weather.humidity);
+  updateHTMLElement(".current-wind-speed", weather.windSpeed);
 
-function updateHumidity(currentHumidity) {
-  updateHTMLElement(".current-humidity", currentHumidity);
-}
-
-function updateDegrees(currentTemp) {
-  updateHTMLElement(".current-temperature", currentTemp);
-}
-
-function updateCity(city) {
-  updateHTMLElement("h1.city-result", city);
+  updateHTMLElement("span.date", getDate());
 }
 
 function updateHTMLElement(className, value) {
@@ -77,4 +65,6 @@ function updateHTMLElement(className, value) {
   element.innerHTML = value;
 }
 
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", search);
 requestApi("London");
