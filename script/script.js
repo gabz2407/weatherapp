@@ -36,9 +36,16 @@ form.addEventListener("submit", search);
 
 function apiTemperature(response) {
   let currentWeather = Math.round(response.data.temperature.current);
-
   let degrees = document.querySelector(".current-weather");
   degrees.innerHTML = currentWeather;
+
+  let currentHumidity = response.data.temperature.humidity;
+  let humidity = document.querySelector(".current-humidity");
+  humidity.innerHTML = currentHumidity;
+
+  let currentWindSpeed = response.data.wind.speed;
+  let speed = document.querySelector(".current-wind-speed");
+  speed.innerHTML = currentWindSpeed;
 
   let city = response.data.city;
   changeCity(city);
