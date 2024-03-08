@@ -27,10 +27,10 @@ function search(event) {
   let input = document.querySelector("#city-input");
   let city = input.value;
 
-  requestAPI(city);
+  requestApi(city);
 }
 
-function requestAPI(city) {
+function requestApi(city) {
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(apiTemperature);
 }
@@ -42,39 +42,39 @@ function apiTemperature(response) {
   let weatherCondition = response.data.condition.description;
   let currentWindSpeed = response.data.wind.speed;
   let currentHumidity = response.data.temperature.humidity;
-  let currentWeather = Math.round(response.data.temperature.current);
+  let currentTemp = Math.round(response.data.temperature.current);
   let city = response.data.city;
 
   updateWeatherCondition(weatherCondition);
   updateWindSpeed(currentWindSpeed);
   updateHumidity(currentHumidity);
-  updateDegrees(currentWeather);
+  updateDegrees(currentTemp);
   updateCity(city);
 }
 
 function updateWeatherCondition(weatherCondition) {
-  let condition = document.querySelector(".weather-condition");
-  condition.innerHTML = weatherCondition;
+  updateHTMLElement(".weather-condition", weatherCondition);
 }
 
 function updateWindSpeed(currentWindSpeed) {
-  let speed = document.querySelector(".current-wind-speed");
-  speed.innerHTML = currentWindSpeed;
+  updateHTMLElement(".current-wind-speed", currentWindSpeed);
 }
 
 function updateHumidity(currentHumidity) {
-  let humidity = document.querySelector(".current-humidity");
-  humidity.innerHTML = currentHumidity;
+  updateHTMLElement(".current-humidity", currentHumidity);
 }
 
-function updateDegrees(currentWeather) {
-  let degrees = document.querySelector(".current-weather");
-  degrees.innerHTML = currentWeather;
+function updateDegrees(currentTemp) {
+  updateHTMLElement(".current-temperature", currentTemp);
 }
 
 function updateCity(city) {
-  let cityElement = document.querySelector("h1.city-result");
-  cityElement.innerHTML = city;
+  updateHTMLElement("h1.city-result", city);
 }
 
-requestAPI("London");
+function updateHTMLElement(className, value) {
+  let element = document.querySelector(className);
+  element.innerHTML = value;
+}
+
+requestApi("London");
