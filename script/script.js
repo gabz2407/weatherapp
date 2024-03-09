@@ -69,30 +69,45 @@ function updateHtmlElement(className, value) {
   element.innerHTML = value;
 }
 
+function formatDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  return days[date.getDay()];
+}
+
 function getForecastApi(city) {
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
 
 function displayForecast(response) {
-  console.log(response);
-  let forecast = document.querySelector("#forecast");
-
   let forecastHTML = "";
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<ul class="daily-weather">
+
+  response.data.daily.forEach(function (day, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<ul class="daily-weather">
           <li>
-            <div class="weather-forecast-week-day">${day}</div>
-            <div class="weather-forecast-emoji">🌦</div>
-            <span class="weather-forecast-min">10˚</span><span class="weather-forecast-max">12˚</span> 
+            <div class="weather-forecast-week-day">${formatDate(day.time)}</div>
+            <div><img src="${
+              day.condition.icon_url
+            }" class="weather-forecast-emoji"</div>
+            <div>
+            <span class="weather-forecast-min">${Math.round(
+              day.temperature.minimum
+            )}˚</span>
+            <span class="weather-forecast-max">${Math.round(
+              day.temperature.maximum
+            )}˚</span> </div>
           </li>
        
         </ul>`;
+    }
   });
 
+  let forecast = document.querySelector("#forecast");
   forecast.innerHTML = forecastHTML;
 }
 

@@ -87,8 +87,8 @@ div .today-weather {
 }
 
 #forecast li {
-  width: 60px;
-  height: 100px;
+  width: 63px;
+  height: 110px;
   list-style: none;
   background-color: rgba(224, 246, 190, 0.395);
   border-radius: 5px;
@@ -97,6 +97,7 @@ div .today-weather {
 
 .daily-weather {
   padding-left: 9px;
+  line-height: 1;
 }
 
 .weather-forecast-week-day {
@@ -118,8 +119,8 @@ div .today-weather {
 }
 
 .weather-forecast-emoji {
-  font-size: 30px;
-  padding: 4px 0;
+  width: 60px;
+  margin: 0;
 }
 
 footer {
