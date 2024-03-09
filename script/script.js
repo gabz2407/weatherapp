@@ -23,7 +23,7 @@ function apiTemperature(response) {
     windSpeed: `${response.data.wind.speed}km/h`,
     emoji: `<img src="${response.data.condition.icon_url}" class="emoji">`,
   };
-  console.log(response);
+
   update(weather);
 }
 
@@ -60,6 +60,8 @@ function update(weather) {
   updateHtmlElement(".emoji", weather.emoji);
 
   updateHtmlElement("span.date", getDate());
+
+  getForecastApi(weather.city);
 }
 
 function updateHtmlElement(className, value) {
@@ -67,7 +69,13 @@ function updateHtmlElement(className, value) {
   element.innerHTML = value;
 }
 
-function displayForecast() {
+function getForecastApi(city) {
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
+  console.log(response);
   let forecast = document.querySelector("#forecast");
 
   let forecastHTML = "";
@@ -90,6 +98,5 @@ function displayForecast() {
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", search);
-requestApi("London");
 
-displayForecast();
+requestApi("London");
