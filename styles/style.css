@@ -32,8 +32,20 @@ body {
 }
 
 #search-form {
-  padding-bottom: 27px;
-  border-bottom: 1px solid rgba(173, 174, 175, 0.24);
+}
+
+.error-container {
+  margin: 2px 0 0 2px;
+  font-size: 10px;
+  color: white;
+  height: 30px;
+}
+
+.error {
+  margin: 2px 0 0 2px;
+  font-size: 10px;
+  color: rgb(240, 136, 136);
+  font-weight: bold;
 }
 
 h1 {
@@ -77,12 +89,14 @@ div .degrees {
 div .today-weather {
   display: flex;
   justify-content: space-between;
+  border-top: 1px solid rgba(173, 174, 175, 0.24);
+  /* padding-top: 25px; */
 }
 
 #forecast {
   display: flex;
   justify-content: space-evenly;
-
+  margin-bottom: 15px;
   text-align: center;
 }
 
@@ -126,7 +140,7 @@ div .today-weather {
 footer {
   padding-top: 27px;
   border-top: 1px solid rgba(173, 174, 175, 0.24);
-  font-size: 13px;
+  font-size: 11px;
   color: slategrey;
   text-align: center;
 }

@@ -1,32 +1,5 @@
 let apiKey = "8bc029ce07bb99a925obf42d966t543f";
 
-function search(event) {
-  event.preventDefault();
-
-  let input = document.querySelector("#city-input");
-  let city = input.value;
-
-  requestApi(city);
-}
-
-function requestApi(city) {
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(apiTemperature);
-}
-
-function apiTemperature(response) {
-  let weather = {
-    city: response.data.city,
-    temperature: Math.round(response.data.temperature.current),
-    condition: response.data.condition.description,
-    humidity: `${response.data.temperature.humidity}%`,
-    windSpeed: `${response.data.wind.speed}km/h`,
-    emoji: `<img src="${response.data.condition.icon_url}" class="emoji">`,
-  };
-
-  update(weather);
-}
-
 function getDate() {
   let now = new Date();
 
@@ -51,6 +24,40 @@ function getDate() {
   }
 }
 
+function search(event) {
+  event.preventDefault();
+
+  let input = document.querySelector("#city-input");
+  let city = input.value;
+
+  requestApi(city);
+}
+
+function requestApi(city) {
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(apiTemperature);
+}
+
+function apiTemperature(response) {
+  if (response.data.message) {
+    updateHtmlElement(
+      ".error-container",
+      `<p class="error">${response.data.message}</p>`
+    );
+  } else {
+    let weather = {
+      city: response.data.city,
+      temperature: Math.round(response.data.temperature.current),
+      condition: response.data.condition.description,
+      humidity: `${response.data.temperature.humidity}%`,
+      windSpeed: `${response.data.wind.speed}km/h`,
+      emoji: `<img src="${response.data.condition.icon_url}" class="emoji">`,
+    };
+
+    update(weather);
+  }
+}
+
 function update(weather) {
   updateHtmlElement("h1.city-result", weather.city);
   updateHtmlElement(".current-temperature", weather.temperature);
@@ -61,11 +68,13 @@ function update(weather) {
 
   updateHtmlElement("span.date", getDate());
 
+  updateHtmlElement(".error-container", "");
+
   getForecastApi(weather.city);
 }
 
-function updateHtmlElement(className, value) {
-  let element = document.querySelector(className);
+function updateHtmlElement(elementSelector, value) {
+  let element = document.querySelector(elementSelector);
   element.innerHTML = value;
 }
 
@@ -91,18 +100,15 @@ function displayForecast(response) {
         `<ul class="daily-weather">
           <li>
             <div class="weather-forecast-week-day">${formatDate(day.time)}</div>
-            <div><img src="${
-              day.condition.icon_url
-            }" class="weather-forecast-emoji"</div>
+            <div><img src="${day.condition.icon_url}" 
+              class="weather-forecast-emoji"</div>
             <div>
-            <span class="weather-forecast-min">${Math.round(
-              day.temperature.minimum
-            )}˚</span>
-            <span class="weather-forecast-max">${Math.round(
-              day.temperature.maximum
-            )}˚</span> </div>
+              <span class="weather-forecast-min">
+              ${Math.round(day.temperature.minimum)}˚</span>
+              <span class="weather-forecast-max">
+              ${Math.round(day.temperature.maximum)}˚</span> 
+            </div>
           </li>
-       
         </ul>`;
     }
   });
